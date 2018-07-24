@@ -12,8 +12,6 @@ class VideoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //view.translatesAutoresizingMaskIntoConstraints = false
-
         // Do any additional setup after loading the view.
     }
 
@@ -23,9 +21,10 @@ class VideoViewController: UIViewController {
     }
     
 
-    @IBAction func doSomething(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+    @IBAction func backButton_TouchUpInside(_ sender: Any) {
+        performSegue(withIdentifier: "VideoToCamera", sender: self)
     }
+    
     
     
     /*

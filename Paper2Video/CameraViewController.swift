@@ -7,13 +7,67 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CameraViewController: UIViewController {
+    
+    var captureSession = AVCaptureSession()
+    var cameraDevice: AVCaptureDevice?
+    var photoOutput: AVCapturePhotoOutput?
+    var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //view.translatesAutoresizingMaskIntoConstraints = false
+        
+        //camera stuff
+        setupCaptureSession()
+        setupDevice()
+        setupInputOutput()
+        setupPreviewLayer()
+        startRunningCaptureSession()
+        
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func setupCaptureSession(){
+        captureSession.sessionPreset = AVCaptureSession.Preset.photo
+    }
+    
+    func setupDevice(){
+        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.back)
+        let devices = deviceDiscoverySession.devices
+        
+        for device in devices{
+            if device.position == AVCaptureDevice.Position.back {
+                cameraDevice = device
+            }
+        }//for
+        
+    }
+    
+    func setupInputOutput(){
+        do{
+            let captureDeviceInput = try AVCaptureDeviceInput(device: cameraDevice!)
+            captureSession.addInput(captureDeviceInput)
+            photoOutput = AVCapturePhotoOutput()
+            photoOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey:AVVideoCodecType.jpeg])], completionHandler: nil)
+            captureSession.addOutput(photoOutput!)
+        } catch {
+            print(error)
+            
+        }
+    }
+    
+    func setupPreviewLayer(){
+        cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
+        cameraPreviewLayer?.frame = self.view.frame
+        self.view.layer.insertSublayer(cameraPreviewLayer!, at: 0)
+    }
+    
+    func startRunningCaptureSession(){
+        captureSession.startRunning()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,7 +75,26 @@ class CameraViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func cameraButton_TouchUpInside(_ sender: Any) {
+        // Convert image to bytes
+        let settings = AVCapturePhotoSettings()
+        photoOutput?.capturePhoto(with: settings, delegate: self)
+        // Send bytes to comparison API
+        
+        // If match is found then play video
+        // UNCOMMENT THIS: performSegue(withIdentifier: "CameraToVideo", sender: self)
+        
+        // If match is not found then show alert
+    }
     
     
 }
 
+extension CameraViewController: AVCapturePhotoCaptureDelegate {
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo:
+        AVCapturePhoto, error: Error?){
+        if let imageData = photo.fileDataRepresentation(){
+            print(imageData)
+        }
+    }
+}
