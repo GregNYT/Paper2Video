@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CameraViewController.swift
 //  Paper2Video
 //
 //  Created by Joshua, Gregory on 7/23/18.
@@ -8,10 +8,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CameraViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //view.translatesAutoresizingMaskIntoConstraints = false
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -20,6 +21,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    
+    
 }
 

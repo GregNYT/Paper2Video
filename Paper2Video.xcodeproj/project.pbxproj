@@ -8,22 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		A7969408210660DE00462781 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7969407210660DE00462781 /* AppDelegate.swift */; };
-		A796940A210660DE00462781 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7969409210660DE00462781 /* ViewController.swift */; };
+		A796940A210660DE00462781 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7969409210660DE00462781 /* CameraViewController.swift */; };
 		A796940D210660DE00462781 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A796940B210660DE00462781 /* Main.storyboard */; };
 		A7969410210660DE00462781 /* Paper2Video.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A796940E210660DE00462781 /* Paper2Video.xcdatamodeld */; };
 		A7969412210660E000462781 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7969411210660E000462781 /* Assets.xcassets */; };
 		A7969415210660E000462781 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7969413210660E000462781 /* LaunchScreen.storyboard */; };
+		A796941D210665A800462781 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A796941C210665A800462781 /* VideoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A7969404210660DE00462781 /* Paper2Video.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paper2Video.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7969407210660DE00462781 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A7969409210660DE00462781 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A7969409210660DE00462781 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		A796940C210660DE00462781 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A796940F210660DE00462781 /* Paper2Video.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Paper2Video.xcdatamodel; sourceTree = "<group>"; };
 		A7969411210660E000462781 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7969414210660E000462781 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A7969416210660E000462781 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A796941C210665A800462781 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +59,8 @@
 			isa = PBXGroup;
 			children = (
 				A7969407210660DE00462781 /* AppDelegate.swift */,
-				A7969409210660DE00462781 /* ViewController.swift */,
+				A7969409210660DE00462781 /* CameraViewController.swift */,
+				A796941C210665A800462781 /* VideoViewController.swift */,
 				A796940B210660DE00462781 /* Main.storyboard */,
 				A7969411210660E000462781 /* Assets.xcassets */,
 				A7969413210660E000462781 /* LaunchScreen.storyboard */,
@@ -139,7 +142,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7969410210660DE00462781 /* Paper2Video.xcdatamodeld in Sources */,
-				A796940A210660DE00462781 /* ViewController.swift in Sources */,
+				A796940A210660DE00462781 /* CameraViewController.swift in Sources */,
+				A796941D210665A800462781 /* VideoViewController.swift in Sources */,
 				A7969408210660DE00462781 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,7 +298,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nocdib.Paper2Video;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -312,7 +316,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nocdib.Paper2Video;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
