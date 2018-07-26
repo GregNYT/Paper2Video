@@ -44,6 +44,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="wX7-LP-SON"/>
                     <connections>
+                        <outlet property="cameraButton" destination="Twv-K4-kLU" id="1CT-Oo-L2O"/>
                         <segue destination="Eop-Bw-pE9" kind="presentation" identifier="CameraToVideo" modalTransitionStyle="crossDissolve" id="OVu-O3-z82"/>
                     </connections>
                 </viewController>
