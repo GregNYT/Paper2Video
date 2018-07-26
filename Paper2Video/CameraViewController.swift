@@ -87,14 +87,36 @@ class CameraViewController: UIViewController {
         // If match is not found then show alert
     }
     
+    func matchImageToVideo(_ imageData: Data) {
+        //let imageUrl = URL(string: "http://www.nocdib.com/trauma_black_blue.png")!
+        //imageData = try! Data(contentsOf: imageUrl)
+        
+        let url = URL(string: "https://api.clarifai.com/v2/searches")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Key 1b8ad3caa84a476d89a670c5a160d174", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = "{\"query\": {\"ands\": [{\"output\": {\"input\": {\"data\": {\"image\": {\"base64\": \"\(imageData.base64EncodedString())\"}}}}}]}}".data(using: .utf8)!
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let data = data,
+                let urlContent = NSString(data: data, encoding: String.Encoding.ascii.rawValue) {
+                print(urlContent)
+            } else {
+                print("Error: \(error ?? "Error in matchImageToVideo() URLSession" as! Error)")
+            }
+            }.resume()
+        
+    }
+    
     
 }
 
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo:
         AVCapturePhoto, error: Error?){
-        if let imageData = photo.fileDataRepresentation(){
-            print(imageData)
+        
+        if let imageData = photo.fileDataRepresentation() {
+            matchImageToVideo(imageData)
         }
     }
 }
