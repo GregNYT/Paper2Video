@@ -36,23 +36,6 @@ struct ImageSearchResult: Codable {
     let hits: [Hit]
 }
 
-struct VideoResult: Codable {
-    struct Rendition: Codable {
-        let type: String
-        let url: String
-        let width: Int
-        let height: Int
-        let duration: Int
-        let bitrate: Int
-        let file_size: Int
-        let videoencoding: String
-        let live: Bool
-    }
-    let renditions: [Rendition]
-}
-
-
-
 class CameraViewController: UIViewController {
     
     
@@ -71,8 +54,25 @@ class CameraViewController: UIViewController {
         setupInputOutput()
         setupPreviewLayer()
         startRunningCaptureSession()
-        
+
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        cameraButton.pulsate()
+    }
+    
+    override open var shouldAutorotate: Bool {
+        return false
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is VideoViewController
+        {
+            let vc = segue.destination as! VideoViewController
+            guard let videoId = sender as? String else { return }
+            vc.videoId = videoId
+        }
     }
     
     func setupCaptureSession(){
@@ -143,6 +143,7 @@ class CameraViewController: UIViewController {
         activityIndicator.startAnimating()
         // disable button
         cameraButton.isEnabled = false
+        cameraButton.alpha = 0
         
         let url = URL(string: "https://api.clarifai.com/v2/searches")!
         var request = URLRequest(url: url)
@@ -157,10 +158,9 @@ class CameraViewController: UIViewController {
                 activityIndicator.removeFromSuperview()
                 // enable button
                 self.cameraButton.isEnabled = true
+                self.cameraButton.alpha = 1
             }
             
-            
-
             // ***** UNCOMMENT TO PRINT THE JSON AS A STRING ***** //
             //let urlContent = NSString(data: data, encoding: String.Encoding.ascii.rawValue)
             //print(urlContent!)
@@ -170,7 +170,6 @@ class CameraViewController: UIViewController {
                 let searchResult = try JSONDecoder().decode(ImageSearchResult.self, from: data)
                 let score = searchResult.hits[0].score
                 let videoId = searchResult.hits[0].input.id.split(separator: "_")[0]
-                
                 self.loadVideo(score, String(videoId))
             } catch let err as NSError {
                 print("Error trying to decode image search result JSON")
@@ -192,8 +191,8 @@ class CameraViewController: UIViewController {
             self.present(alert, animated: true)
         }else{
             //switch views and load video
+            performSegue(withIdentifier: "CameraToVideo", sender: videoId)
         }
-
 
     }
     
@@ -209,26 +208,19 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
     }
 }
 
-//extension UIViewController {
-//    class func displaySpinner(onView : UIView) -> UIView {
-//        let spinnerView = UIView.init(frame: onView.bounds)
-//        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-//        let ai = UIActivityIndicatorView.init(activityIndicatorStyle: .whiteLarge)
-//        ai.startAnimating()
-//        ai.center = spinnerView.center
-//
-//        DispatchQueue.main.async {
-//            spinnerView.addSubview(ai)
-//            onView.addSubview(spinnerView)
-//        }
-//
-//        return spinnerView
-//    }
-//
-//    class func removeSpinner(spinner :UIView) {
-//        DispatchQueue.main.async {
-//            spinner.removeFromSuperview()
-//        }
-//    }
-//}
-
+extension UIButton {
+    
+    func pulsate() {
+        
+        let pulse = CASpringAnimation(keyPath: "transform.scale")
+        pulse.duration = 0.9
+        pulse.fromValue = 1.0
+        pulse.toValue = 1.1
+        pulse.autoreverses = true
+        pulse.repeatCount = .infinity
+        pulse.initialVelocity = 0.5
+        pulse.damping = 1.0
+        
+        layer.add(pulse, forKey: "pulse")
+    }
+}

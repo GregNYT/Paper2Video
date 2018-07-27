@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A76F81FD210A9D1B00402654 /* app_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A76F81FC210A9D1B00402654 /* app_icon.jpg */; };
 		A7969408210660DE00462781 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7969407210660DE00462781 /* AppDelegate.swift */; };
 		A796940A210660DE00462781 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7969409210660DE00462781 /* CameraViewController.swift */; };
 		A796940D210660DE00462781 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A796940B210660DE00462781 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A76F81FC210A9D1B00402654 /* app_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = app_icon.jpg; sourceTree = "<group>"; };
 		A7969404210660DE00462781 /* Paper2Video.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paper2Video.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7969407210660DE00462781 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7969409210660DE00462781 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 		A7969406210660DE00462781 /* Paper2Video */ = {
 			isa = PBXGroup;
 			children = (
+				A76F81FC210A9D1B00402654 /* app_icon.jpg */,
 				A7969407210660DE00462781 /* AppDelegate.swift */,
 				A7969409210660DE00462781 /* CameraViewController.swift */,
 				A796941C210665A800462781 /* VideoViewController.swift */,
@@ -128,6 +131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A76F81FD210A9D1B00402654 /* app_icon.jpg in Resources */,
 				A7969415210660E000462781 /* LaunchScreen.storyboard in Resources */,
 				A7969412210660E000462781 /* Assets.xcassets in Resources */,
 				A796940D210660DE00462781 /* Main.storyboard in Resources */,

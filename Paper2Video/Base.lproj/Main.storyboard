@@ -25,6 +25,7 @@
                                     <constraint firstAttribute="height" constant="60" id="KO3-dL-g7G"/>
                                     <constraint firstAttribute="width" constant="60" id="ujW-Tg-GKx"/>
                                 </constraints>
+                                <state key="normal" backgroundImage="app_icon.jpg"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="30"/>
@@ -91,4 +92,7 @@
             <point key="canvasLocation" x="2949.5999999999999" y="240.62968515742131"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="app_icon.jpg" width="400" height="400"/>
+    </resources>
 </document>
