@@ -68,6 +68,7 @@ fastlane/test_output
 ## Various settings
 
 ## Other
+Clarifai.plist
 
 ### Xcode Patch ###
 *.xcodeproj/*
