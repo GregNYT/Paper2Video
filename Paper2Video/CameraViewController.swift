@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import AVKit
 
 struct Status: Codable {
     let code: Int
@@ -36,6 +37,21 @@ struct ImageSearchResult: Codable {
     let hits: [Hit]
 }
 
+struct VideoResult: Codable {
+    struct Rendition: Codable {
+        let type: String
+        let url: String
+        let width: Int
+        let height: Int
+        let duration: Int
+        let bitrate: Int
+        let file_size: Int
+        let videoencoding: String
+        let live: Bool
+    }
+    let renditions: [Rendition]
+}
+
 class CameraViewController: UIViewController {
     
     
@@ -47,19 +63,45 @@ class CameraViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Add the activity indicator to the view
+        // Notify when the device orientation has changed
+        NotificationCenter.default.addObserver(self, selector: #selector(self.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
         //camera stuff
         setupCaptureSession()
         setupDevice()
         setupInputOutput()
         setupPreviewLayer()
         startRunningCaptureSession()
-
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
+    // Every time the view appears start the camera button's animation
     override func viewDidAppear(_ animated: Bool) {
         cameraButton.pulsate()
+    }
+    
+    // When the video player is closed set the camera view to default (portrait) position.
+    // This prevents the camera screen from rotating to landscape when the video is closed in landscape.
+    override func viewWillAppear(_ animated: Bool) {
+        AppDelegate.AppUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
+    }
+    
+    // Called by the NotificationCenter in viewDidLoad() to rotate the camera button based on device orientation
+    @objc func rotated() {
+        var rotation_angle: CGFloat = 0
+        switch UIDevice.current.orientation
+        {
+        case .landscapeLeft:
+            rotation_angle = (CGFloat(Double.pi) / 2)
+        case .landscapeRight:
+            rotation_angle = (CGFloat(-Double.pi) / 2)
+        case .portraitUpsideDown:
+            rotation_angle = CGFloat(Double.pi)
+        case .unknown, .portrait, .faceUp, .faceDown:
+            rotation_angle = 0
+        }
+        UIView.animate(withDuration: 0.2, animations:
+        {
+            self.cameraButton.transform = CGAffineTransform(rotationAngle: rotation_angle);
+        }, completion: nil)
     }
     
     override open var shouldAutorotate: Bool {
@@ -75,11 +117,11 @@ class CameraViewController: UIViewController {
         }
     }
     
-    func setupCaptureSession(){
+    func setupCaptureSession() {
         captureSession.sessionPreset = AVCaptureSession.Preset.photo
     }
     
-    func setupDevice(){
+    func setupDevice() {
         let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.back)
         let devices = deviceDiscoverySession.devices
         
@@ -91,7 +133,7 @@ class CameraViewController: UIViewController {
         
     }
     
-    func setupInputOutput(){
+    func setupInputOutput() {
         do{
             let captureDeviceInput = try AVCaptureDeviceInput(device: cameraDevice!)
             captureSession.addInput(captureDeviceInput)
@@ -104,15 +146,16 @@ class CameraViewController: UIViewController {
         }
     }
     
-    func setupPreviewLayer(){
+    func setupPreviewLayer() {
         cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
         cameraPreviewLayer?.frame = self.view.frame
         self.view.layer.insertSublayer(cameraPreviewLayer!, at: 0)
+        
     }
     
-    func startRunningCaptureSession(){
+    func startRunningCaptureSession() {
         captureSession.startRunning()
     }
 
@@ -190,10 +233,46 @@ class CameraViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alert, animated: true)
         }else{
-            //switch views and load video
-            performSegue(withIdentifier: "CameraToVideo", sender: videoId)
+            guard let url = URL(string: "https://www.nytimes.com/svc/video/api/v3/video/\(videoId)") else { return }
+            print("zzz \(url.absoluteString)")
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+                DispatchQueue.main.async {
+                    if let err = err {
+                        print("Failed to get data from url:", err)
+                        return
+                    }
+                    
+                    guard let data = data else { return }
+                    
+                    do {
+                        let searchResult = try JSONDecoder().decode(VideoResult.self, from: data)
+                        let video1080p = searchResult.renditions.filter { $0.type == "video_1080p_mp4" }
+                        self.playVideo(video1080p[0].url)
+                    } catch let jsonErr {
+                        let alert = UIAlertController(title: "Video Failed To Load", message: "Failed to decode JSON from the Video API.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                        self.present(alert, animated: true)
+                        print("Failed in loadVideo():", jsonErr)
+                    }
+                }
+            }.resume()
         }
 
+    }
+    
+    func playVideo(_ videoPath: String) {
+        DispatchQueue.main.async {
+            //switch views and load video
+            //performSegue(withIdentifier: "CameraToVideo", sender: videoId)
+            let video = AVPlayer(url: URL(fileURLWithPath: videoPath))
+            let videoPlayer = AVPlayerViewController()
+            videoPlayer.player = video
+            self.present(videoPlayer, animated: true, completion:
+                {
+                    video.play()
+            })
+            
+        }// DispatchQueue
     }
     
 } // class CameraViewController
@@ -211,16 +290,15 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
 extension UIButton {
     
     func pulsate() {
-        
         let pulse = CASpringAnimation(keyPath: "transform.scale")
         pulse.duration = 0.9
-        pulse.fromValue = 1.0
-        pulse.toValue = 1.1
+        pulse.fromValue = 1.5
+        pulse.toValue = 1.6
         pulse.autoreverses = true
         pulse.repeatCount = .infinity
         pulse.initialVelocity = 0.5
         pulse.damping = 1.0
-        
         layer.add(pulse, forKey: "pulse")
     }
 }
+

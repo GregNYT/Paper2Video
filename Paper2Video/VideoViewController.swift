@@ -9,21 +9,6 @@
 import UIKit
 import AVKit
 
-struct VideoResult: Codable {
-    struct Rendition: Codable {
-        let type: String
-        let url: String
-        let width: Int
-        let height: Int
-        let duration: Int
-        let bitrate: Int
-        let file_size: Int
-        let videoencoding: String
-        let live: Bool
-    }
-    let renditions: [Rendition]
-}
-
 class VideoViewController: UIViewController {
     
     var videoId: String = ""
@@ -48,14 +33,19 @@ class VideoViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alert, animated: true)
         */
-        let videoPath = "https://vp.nyt.com/video/2018/07/18/77169_1_22police-violence-video_wg_240p.mp4"
+        let videoPath = "https://vp.nyt.com/video/2018/07/18/77169_1_22police-violence-video_wg_1080p.mp4"
         let video = AVPlayer(url: URL(fileURLWithPath: videoPath))
         let videoPlayer = AVPlayerViewController()
         videoPlayer.player = video
         
         present(videoPlayer, animated: true, completion:
         {
-                video.play()
+            video.play()
+        })
+        
+        dismiss(animated: true, completion:
+        {
+            video.pause()
         })
         /*let urlString = "http://api.letsbuildthatapp.com/jsondecodable/courses_snake_case"
         guard let url = URL(string: urlString) else { return }
@@ -82,13 +72,9 @@ class VideoViewController: UIViewController {
             }.resume()*/
     }
 
-    
-
     @IBAction func backButton_TouchUpInside(_ sender: Any) {
         performSegue(withIdentifier: "VideoToCamera", sender: self)
     }
-    
-    
     
     /*
     // MARK: - Navigation
