@@ -187,11 +187,18 @@ class CameraViewController: UIViewController {
         // disable button
         cameraButton.isEnabled = false
         cameraButton.alpha = 0
-        
+        // Get the Clarifai API key from Clarifai.plist file (not in git repo)
+        var nsDictionary: NSDictionary?
+        var api_key: String = ""
+        if let path = Bundle.main.path(forResource: "Clarifai", ofType: "plist") {
+            nsDictionary = NSDictionary(contentsOfFile: path)
+            api_key = (nsDictionary!["api_key"] as! String)
+        }
+        // Search Clarifai for the image
         let url = URL(string: "https://api.clarifai.com/v2/searches")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("Key 1b8ad3caa84a476d89a670c5a160d174", forHTTPHeaderField: "Authorization")
+        request.setValue(api_key, forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = "{\"query\": {\"ands\": [{\"output\": {\"input\": {\"data\": {\"image\": {\"base64\": \"\(imageData.base64EncodedString())\"}}}}}]}}".data(using: .utf8)!
         URLSession.shared.dataTask(with: request) { (data, response, error)  in
@@ -234,7 +241,7 @@ class CameraViewController: UIViewController {
             self.present(alert, animated: true)
         }else{
             guard let url = URL(string: "https://www.nytimes.com/svc/video/api/v3/video/\(videoId)") else { return }
-            print("zzz \(url.absoluteString)")
+            print("URL = \(url.absoluteString)")
             URLSession.shared.dataTask(with: url) { (data, _, err) in
                 DispatchQueue.main.async {
                     if let err = err {
