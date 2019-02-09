@@ -231,7 +231,7 @@ class CameraViewController: UIViewController {
     } // func matchImageToVideo
 
     func loadVideo (_ score: Double, _ videoId: String) {
-        let minAllowableScore: Double = 0.50
+        let minAllowableScore: Double = 0.65
         print("SCORE = \(score)")
         print("ID = \(videoId)")
         

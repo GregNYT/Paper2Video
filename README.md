@@ -18,9 +18,10 @@ Clone the repo and create a file called `Clarifai.plist` inside of the `Paper2Vi
 
 ### Development
 **Greg Joshua** - Concept and app development
+
 ### Special Thanks
-**Adam Schott** - *Technology (iOS)* - Technical advice 
-**Veronique Brossier** - *Technology (iOS)* - Technical advice 
-**Deborah Auer** - *Newsroom (Art)* - Providing physical paper assets to corresponding videos
-**Francisco Souza** - *Technology (Video)* - Helping with the Video API
-**Mannish Mittal** - *Technology (iOS)* - Support with device testing
+- **Adam Schott** - *Technology (iOS)* - Technical advice 
+- **Veronique Brossier** - *Technology (iOS)* - Technical advice 
+- **Deborah Auer** - *Newsroom (Art)* - Providing physical paper assets to corresponding videos
+-  **Francisco Souza** - *Technology (Video)* - Helping with the Video API
+- **Mannish Mittal** - *Technology (iOS)* - Support with device testing

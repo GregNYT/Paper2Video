@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A76F81FD210A9D1B00402654 /* app_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A76F81FC210A9D1B00402654 /* app_icon.jpg */; };
+		A775E6A6220D2E46002B62C9 /* Clarifai.plist in Resources */ = {isa = PBXBuildFile; fileRef = A775E6A5220D2E46002B62C9 /* Clarifai.plist */; };
 		A7969408210660DE00462781 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7969407210660DE00462781 /* AppDelegate.swift */; };
 		A796940A210660DE00462781 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7969409210660DE00462781 /* CameraViewController.swift */; };
 		A796940D210660DE00462781 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A796940B210660DE00462781 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		A76F81FC210A9D1B00402654 /* app_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = app_icon.jpg; sourceTree = "<group>"; };
+		A775E6A5220D2E46002B62C9 /* Clarifai.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Clarifai.plist; sourceTree = "<group>"; };
 		A7969404210660DE00462781 /* Paper2Video.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paper2Video.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7969407210660DE00462781 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7969409210660DE00462781 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				A7969411210660E000462781 /* Assets.xcassets */,
 				A7969413210660E000462781 /* LaunchScreen.storyboard */,
 				A7969416210660E000462781 /* Info.plist */,
+				A775E6A5220D2E46002B62C9 /* Clarifai.plist */,
 				A796940E210660DE00462781 /* Paper2Video.xcdatamodeld */,
 			);
 			path = Paper2Video;
@@ -134,6 +137,7 @@
 				A76F81FD210A9D1B00402654 /* app_icon.jpg in Resources */,
 				A7969415210660E000462781 /* LaunchScreen.storyboard in Resources */,
 				A7969412210660E000462781 /* Assets.xcassets in Resources */,
+				A775E6A6220D2E46002B62C9 /* Clarifai.plist in Resources */,
 				A796940D210660DE00462781 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
