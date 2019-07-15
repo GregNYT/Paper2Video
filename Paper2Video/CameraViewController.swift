@@ -192,7 +192,7 @@ class CameraViewController: UIViewController {
         var api_key: String = ""
         if let path = Bundle.main.path(forResource: "Clarifai", ofType: "plist") {
             nsDictionary = NSDictionary(contentsOfFile: path)
-            api_key = (nsDictionary!["api_key"] as! String)
+            api_key = (nsDictionary!["clarifaiKey"] as! String)
         }
         // Search Clarifai for the image
         let url = URL(string: "https://api.clarifai.com/v2/searches")!
@@ -212,9 +212,11 @@ class CameraViewController: UIViewController {
             }
             
             // ***** UNCOMMENT TO PRINT THE JSON AS A STRING ***** //
-            //let urlContent = NSString(data: data, encoding: String.Encoding.ascii.rawValue)
-            //print(urlContent!)
-            //print("------------------")
+            /*
+            let urlContent = NSString(data: data, encoding: String.Encoding.ascii.rawValue)
+            print(urlContent!)
+            print("------------------")
+            */
             
             do {
                 let searchResult = try JSONDecoder().decode(ImageSearchResult.self, from: data)
@@ -231,7 +233,7 @@ class CameraViewController: UIViewController {
     } // func matchImageToVideo
 
     func loadVideo (_ score: Double, _ videoId: String) {
-        let minAllowableScore: Double = 0.65
+        let minAllowableScore: Double = 0.77
         print("SCORE = \(score)")
         print("ID = \(videoId)")
         
